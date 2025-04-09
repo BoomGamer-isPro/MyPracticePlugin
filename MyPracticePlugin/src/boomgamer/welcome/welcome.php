@@ -23,9 +23,9 @@ class welcome extends PluginBase implements Listener {
         $player->setGamemode(GameMode::ADVENTURE);
         $player->sendTitle("§cBridge§9Splash");
         $player->sendSubTitle("Welcome!");
-        $player->sendMessage("§aWelcome To BridgeSplash" . $player->getName() . "!");
+        $event->setJoinMessage("§aWelcome To BridgeSplash " . $player->getName() . "!");
         $onlinePlayer = count($this->getServer()->getOnlinePlayers());
-        $player->sendMessage("There are §e" . $onlinePlayer . "players playing.");
+        $player->sendMessage("There are §e" . $onlinePlayer . " players playing.");
         $location = $player->getLocation();
         $player->getWorld()->addSound($location, new XpCollectSound());
         $player->getInventory()->clearAll();
