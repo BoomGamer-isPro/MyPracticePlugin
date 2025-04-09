@@ -20,10 +20,10 @@ class welcome extends PluginBase implements Listener {
 
     public function onPlayerJoin(PlayerJoinEvent $event) {
         $player = $event->getPlayer();
+        $event->setJoinMessage("§aWelcome To BridgeSplash" . $player->getName() . "!");
         $player->setGamemode(GameMode::ADVENTURE);
         $player->sendTitle("§cBridge§9Splash");
         $player->sendSubTitle("Welcome!");
-        $player->sendMessage("§aWelcome To BridgeSplash" . $player->getName() . "!");
         $onlinePlayer = count($this->getServer()->getOnlinePlayers());
         $player->sendMessage("There are §e" . $onlinePlayer . "players playing.");
         $location = $player->getLocation();
