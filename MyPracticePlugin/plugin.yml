@@ -1,0 +1,4 @@
+name: Welcome
+version: 1.0.0
+main: boomgamer\welcome\welcome
+api: 5.25.0
