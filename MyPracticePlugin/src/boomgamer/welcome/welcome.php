@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Boomgamer\MinigamesPlugin;
+namespace boomgamer\welcome;
 
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerJoinEvent;
@@ -10,7 +10,7 @@ use pocketmine\item\VanillaItems;
 use pocketmine\player\GameMode;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat;
-use pocketmine\world\sound\XpLevelUpSound;
+use pocketmine\world\sound\XpCollectSound;
 
 class Main extends PluginBase implements Listener {
 
@@ -27,7 +27,7 @@ class Main extends PluginBase implements Listener {
         $player->sendSubTitle(TextFormat::WHITE . $this->getName());
         $event->setJoinMessage(TextFormat::WHITE . "Welcome To the server " . TextFormat::GREEN . $this->getName());
         $location = $player->getLocation();
-        $player->getWorld()->addSound($location, new XpLevelUpSound());
+        $player->getWorld()->addSound($location, new XpCollectSound());
         $player->setHealth($player->getMaxHealth());
         $player->getHungerManager()->setFood(20);
         $player->getInventory()->clearAll();
