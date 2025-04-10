@@ -2,41 +2,43 @@
 
 declare(strict_types=1);
 
-namespace boomgamer\welcome;
+namespace Boomgamer\MinigamesPlugin;
 
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\item\VanillaItems;
 use pocketmine\player\GameMode;
 use pocketmine\plugin\PluginBase;
-use pocketmine\world\sound\XpCollectSound;
+use pocketmine\utils\TextFormat;
+use pocketmine\world\sound\XpLevelUpSound;
 
-class welcome extends PluginBase implements Listener {
+class Main extends PluginBase implements Listener {
 
     public function onEnable(): void {
-        $this->getLogger()->info("§aPlugin Enabled!");
+
+        $this->getLogger()->info("Plugin Enabled");
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
     }
 
-    public function onPlayerJoin(PlayerJoinEvent $event) {
+    public function onJoin(PlayerJoinEvent $event): void {
         $player = $event->getPlayer();
+        $player->sendTitle(TextFormat::GREEN . "Welcome!");
         $player->setGamemode(GameMode::ADVENTURE);
-        $player->sendTitle("§cBridge§9Splash");
-        $player->sendSubTitle("Welcome!");
-        $event->setJoinMessage("§aWelcome To BridgeSplash " . $player->getName() . "!");
-        $onlinePlayer = count($this->getServer()->getOnlinePlayers());
-        $player->sendMessage("There are §e" . $onlinePlayer . " players playing.");
+        $player->sendSubTitle(TextFormat::WHITE . $this->getName());
+        $event->setJoinMessage(TextFormat::WHITE . "Welcome To the server " . TextFormat::GREEN . $this->getName());
         $location = $player->getLocation();
-        $player->getWorld()->addSound($location, new XpCollectSound());
-        $player->getInventory()->clearAll();
-        $item = VanillaItems::COMPASS();
-        $player->getInventory()->addItem($item);
+        $player->getWorld()->addSound($location, new XpLevelUpSound());
         $player->setHealth($player->getMaxHealth());
         $player->getHungerManager()->setFood(20);
-
+        $player->getInventory()->clearAll();
+        $item = VanillaItems::COMPASS();
+        $item->setCustomName(TextFormat::GREEN . "Teleporter");
+        $player->getInventory()->setItem(4, $item);
+    }
+    
+    public function onDisable(): void
+    {
+        $this->getLogger()->info("Plugin Disabled");
     }
 
-    public function onDisable(): void {
-        $this->getLogger()->info("§cPlugin Disabled!");
-    }
 }
